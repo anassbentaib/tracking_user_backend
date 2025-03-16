@@ -48,8 +48,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'whitenoise.middleware.WhitenoiseMiddleware',
-
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
 ]
 
 ROOT_URLCONF = 'user-tracking.urls'
@@ -75,14 +74,16 @@ WSGI_APPLICATION = 'user-tracking.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',   
+        'USER': 'postgres',       
+        'PASSWORD': 'TIWcbTvBhcIqPdQeAurNKsvmhgOmwySm', 
+        'HOST': 'shinkansen.proxy.rlwy.net',   
+        'PORT': '26665',    
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
