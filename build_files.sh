@@ -6,7 +6,7 @@ python3 manage.py collectstatic --noinput
 # Add Python bin directory to PATH
 export PATH="/python312/bin:$PATH"
 
-# Debug: Check if gunicorn is accessible
+
 echo "Gunicorn Path: $(which gunicorn)"
 
 # Start Gunicorn
