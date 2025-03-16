@@ -26,5 +26,6 @@
       "runtime": "python3.10",
       "maxDuration": 30
     }
-  }
+  },
+  "buildCommand": "bash build_files.sh"
 }
