@@ -1,6 +1,7 @@
 asgiref==3.8.1
 certifi==2025.1.31
 distlib==0.3.9
+dj-database-url==2.3.0
 Django==5.1.7
 djangorestframework==3.15.2
 filelock==3.18.0
@@ -10,4 +11,6 @@ platformdirs==4.3.6
 psycopg2-binary==2.9.10
 setuptools==76.0.0
 sqlparse==0.5.3
+typing_extensions==4.12.2
 virtualenv==20.29.3
+whitenoise==6.9.0
