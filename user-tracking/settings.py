@@ -4,12 +4,12 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY: Keep the secret key safe in production
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-secret-key')
+SECRET_KEY = 'django-insecure-=y$k2so+-bd2mh2ss8at$*xaf@06_^dz3f5&m)mnvz*u=n^mxd'
 
 # SECURITY: Disable debug in production
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+ALLOWED_HOSTS = ["*"]
 
 # Installed apps
 INSTALLED_APPS = [
