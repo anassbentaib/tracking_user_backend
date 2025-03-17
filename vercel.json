@@ -20,12 +20,5 @@
       "src": "/(.*)",
       "dest": "user-tracking/wsgi.py"
     }
-  ],
-  "functions": {
-    "user-tracking/wsgi.py": {
-      "runtime": "python3.10",
-      "maxDuration": 30
-    }
-  },
-  "buildCommand": "bash build_files.sh"
+  ]
 }

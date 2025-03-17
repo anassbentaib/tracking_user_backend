@@ -92,23 +92,12 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+USE_L10N = True
 
 # Static & Media Files
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATIC_ROOT = BASE_DIR / "staticfiles_build" / "static"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Static files settings in development
-if DEBUG:
-    import mimetypes
-    mimetypes.add_type("text/css", ".css", True)
-    mimetypes.add_type("application/javascript", ".js", True)
-    
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

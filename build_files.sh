@@ -1,13 +1,12 @@
 #!/bin/bash
-python3 -m pip install --upgrade pip
-python3 -m pip install -r requirements.txt
-python3 manage.py collectstatic --noinput
 
-# Add Python bin directory to PATH
-export PATH="/python312/bin:$PATH"
+# Build the project
+echo "Building the project..."
+python3.9 -m pip install -r requirements.txt
 
+echo "Make Migration..."
+python3.9 manage.py makemigrations --noinput
+python3.9 manage.py migrate --noinput
 
-echo "Gunicorn Path: $(which gunicorn)"
-
-# Start Gunicorn
-gunicorn --bind 0.0.0.0:8000 user-tracking.wsgi:application
+echo "Collect Static..."
+python3.9 manage.py collectstatic --noinput --clear
