@@ -3,15 +3,12 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY: Keep the secret key safe in production
 SECRET_KEY = 'django-insecure-=y$k2so+-bd2mh2ss8at$*xaf@06_^dz3f5&m)mnvz*u=n^mxd'
 
-# SECURITY: Disable debug in production
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -87,7 +84,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True

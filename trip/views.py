@@ -17,12 +17,12 @@ alternative_routes_params = {
 class TripListView(APIView):
     def get(self, request):
         """Fetch all trips sorted by latest"""
-        trips = Trip.objects.all().order_by("-created_at")  # Sort by latest
+        trips = Trip.objects.all().order_by("-created_at") 
         serializer = TripSerializer(trips, many=True)
         
         return Response({
-            "recent_trip": serializer.data[0] if serializer.data else None,  # Latest trip
-            "all_trips": serializer.data,  # All trips
+            "recent_trip": serializer.data[0] if serializer.data else None,  
+            "all_trips": serializer.data,  
         }, status=status.HTTP_200_OK)
 
 
@@ -35,17 +35,15 @@ class TripView(APIView):
             if not trip.can_start_new_trip():
                 return Response({"error": "You have exceeded the 70-hour driving limit."}, status=status.HTTP_400_BAD_REQUEST)
             
-            # Fetch addresses from coordinates before saving
             trip.current_address = self.get_address_from_coords(trip.current_location)
             trip.pickup_address = self.get_address_from_coords(trip.pickup_location)
             trip.dropoff_address = self.get_address_from_coords(trip.dropoff_location)
 
             trip.save()
 
-            # Fetch route details
             route_data = self.get_route_details(trip)
 
-            if route_data.get("routes"):  # ✅ Make sure routes exist before saving
+            if route_data.get("routes"): 
                 trip.total_miles = route_data["routes"][0]["distance"]
                 trip.duration = route_data["routes"][0]["duration"]
                 trip.available_routes = route_data["routes"]
@@ -66,14 +64,14 @@ class TripView(APIView):
 
     def get_address_from_coords(self, latlng):
         """Fetch address from coordinates using OpenRouteService reverse geocoding."""
-        lat, lng = latlng.split(",")  # Extract lat and lng
+        lat, lng = latlng.split(",") 
         url = f"https://api.openrouteservice.org/geocode/reverse?api_key={ORS_API_KEY}&point.lat={lat}&point.lon={lng}"
         
         try:
             response = requests.get(url)
             data = response.json()
             if "features" in data and len(data["features"]) > 0:
-                return data["features"][0]["properties"]["label"]  # Extract address
+                return data["features"][0]["properties"]["label"] 
         except Exception as e:
             print(f"Error fetching address: {e}")
         
@@ -81,15 +79,13 @@ class TripView(APIView):
 
     def get_route_details(self, trip):
         """Fetches multiple routes, fuel stops, and water alerts"""
-        # Convert lat,lon format to lon,lat required by ORS
         start = ",".join(trip.pickup_location.split(",")[::-1])
         end = ",".join(trip.dropoff_location.split(",")[::-1])
 
-        # Convert the alternative_routes_params dictionary to a JSON string and URL-encode it
+    
         alternative_routes_json = json.dumps(alternative_routes_params)
         alternative_routes_encoded = urllib.parse.quote(alternative_routes_json)
 
-        # Construct the URL with the encoded alternative_routes parameter
         route_url = f"https://api.openrouteservice.org/v2/directions/driving-car?api_key={ORS_API_KEY}&start={start}&end={end}&alternative_routes={alternative_routes_encoded}"
 
         response = requests.get(route_url)
@@ -99,17 +95,16 @@ class TripView(APIView):
             print("Error in OpenRouteService response:", data)
             return {"error": "Route fetching failed"}
 
-        print("OpenRouteService API Response:", data)  # Debugging
+        print("OpenRouteService API Response:", data)
 
-        # ✅ Extract route details correctly
         routes = []
         if "features" in data and len(data["features"]) > 0:
             for feature in data["features"]:
                 if "geometry" in feature and "summary" in feature["properties"]:
                     routes.append({
                         "route": [[lat, lon] for lon, lat in feature["geometry"]["coordinates"]],
-                        "distance": feature["properties"]["summary"]["distance"] / 1000,  # Convert meters to km
-                        "duration": feature["properties"]["summary"]["duration"] / 3600,  # Convert seconds to hours
+                        "distance": feature["properties"]["summary"]["distance"] / 1000,  
+                        "duration": feature["properties"]["summary"]["duration"] / 3600, 
                     })
 
         return {
